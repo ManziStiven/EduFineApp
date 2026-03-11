@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Testing,Transactions
+from core.models import Testing,Transactions, Budget
 
 class TestingSerializer(serializers.ModelSerializer): 
     class Meta:
@@ -39,3 +39,9 @@ class TransactionSerializer(serializers.ModelSerializer):
                 "category": "Category is required for income transactions."
             })
         return data
+    
+class BudgetSerializer(serializers.ModelSerializer):
+class Meta:
+        model = Budget
+        fields = ['id', 'user', 'name', 'limit_amount', 'month', 'created_at']
+        read_only_fields = ['id', 'user', 'created_at']
