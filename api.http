@@ -67,3 +67,36 @@ Content-Type: application/json
   "date": "2026-03-11"
 }
 
+###
+
+POST  http://127.0.0.1:8000/api/categories/
+Content-Type: application/json
+
+{ 
+ "name": "vegetables2",
+ "description": "vegetables2 description"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/categories/
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/api/categories/1/
+Accept: application/json
+
+###
+PUT http://127.0.0.1:8000/api/categories/1/
+Content-Type: application/json
+
+{ 
+ "name": "updated",
+ "description": "vegetablesupdated description"
+}
+
+###
+DELETE  http://127.0.0.1:8000/api/categories/2/
+
+
