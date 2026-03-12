@@ -45,3 +45,29 @@ class BudgetSerializer(serializers.ModelSerializer):
         model = Budget
         fields = ['id', 'user', 'name', 'limit_amount', 'month', 'created_at']
         read_only_fields = ['id', 'user', 'created_at']
+        
+        
+class TestingSerializer(serializers.ModelSerializer): 
+    class Meta:
+        model = Testing
+        fields = '__all__'
+
+
+
+class TestingNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Testing
+        fields = ['id', 'name']
+        
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'description', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+    def validate_name(self, value):
+        """Ensure category is not a duplicant."""
+        if Category.objects.filter(name__iexact=value).exists():
+            raise serializers.ValidationError("Category name already exists")
+
+        return value
