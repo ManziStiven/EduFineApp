@@ -1,9 +1,7 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from core.views import testing_view, health_check
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('testing', testing_view, name='testing'),
-    path('health', health_check, name='health'),
+    path('api/', include('core.urls')),
 ]

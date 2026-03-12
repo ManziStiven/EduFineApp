@@ -1,15 +1,15 @@
 from django.db import models
 from django.conf import settings
 
+
 class Testing(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+	name = models.CharField(max_length=200)
+	description = models.TextField()
+	created_at = models.DateTimeField(auto_now_add=True)
 
+	def __str__(self):
+		return self.name
 
-    def __str__(self):
-        return self.name
-    
 class Transaction(models.Model):
     TRANSACTION_TYPES = [
         ('income', 'Income'),
@@ -34,7 +34,8 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.amount}"
-    
+
+
 class Budget(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -48,5 +49,3 @@ class Budget(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.limit_amount}"
-        
-

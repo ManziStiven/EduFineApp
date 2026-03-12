@@ -5,8 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from core.models import Testing, Transaction, Budget
-from core.serializers import TestingSerializer, TransactionSerializer
-from core.serializers import BudgetSerializer
+from core.serializers import TestingSerializer, TransactionSerializer, BudgetSerializer
 
 def testing_view(request):
     testings = Testing.objects.all()
