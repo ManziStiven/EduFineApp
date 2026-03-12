@@ -109,3 +109,70 @@ class BudgetListView(APIView):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class CategoryListView(APIView):
+    """
+    GET  /api/categories/     -> List all categories
+    POST /api/categories/     -> Create a new categories
+    """
+
+    def get(self, request):
+        categories = Categories.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CategoryDetailView(APIView):
+    """
+    GET    /api/Categories/<id>/  -> Retrieve a single tranCategory
+    PUT    /api/Categories/<id>/  -> Update a Category
+    DELETE /api/Categories/<id>/  -> Delete a Category
+    """
+
+    def get_object(self, id):
+        try:
+            return Category.objects.get(id=id)
+        except Category.DoesNotExist:
+            return None
+
+    def get(self, request, id):
+        Category = self.get_object(id)
+        if Category is None:
+            return Response(
+                {"error": "Category not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = CategorySerializer(Category)
+        return Response(serializer.data)
+
+    def put(self, request, id):
+      Category = self.get_object(id)
+        if Category is None:
+            return Response(
+                {"error": "Category not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = CategorySerializer(Category, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        Category = self.get_object(id)
+        if Category is None:
+            return Response(
+                {"error": "Category not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        Category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)    
+    
